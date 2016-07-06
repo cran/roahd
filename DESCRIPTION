@@ -1,8 +1,8 @@
 Package: roahd
 Type: Package
 Title: Robust Analysis of High Dimensional Data
-Version: 1.1
-Date: 2016-04-13
+Version: 1.2
+Date: 2016-07-06
 Authors@R: c( person("Nicholas", "Tarabelloni", role = c("aut", "cre"),
                      email = "nicholas.tarabelloni@polimi.it"),
               person("Ana", "Arribas-Gil", role = "aut",
@@ -29,6 +29,6 @@ Imports: scales, robustbase,
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-05-11 22:04:35 UTC; nicholas
+Packaged: 2016-07-06 15:46:12 UTC; nicholas
 Repository: CRAN
-Date/Publication: 2016-05-12 14:48:11
+Date/Publication: 2016-07-06 23:32:40

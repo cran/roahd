@@ -59,12 +59,6 @@
 #'
 fData = function( grid, values )
 {
-  if( length( unique( diff( grid ) ) ) > 1 )
-  {
-    max( diff( unique( diff( grid ) ) ) ) / diff( range( grid ) ) < 1e-13  ||
-      stop( ' Error in fData: you provided an unevenly spaced grid')
-  }
-
   P = length( grid )
 
   values = toRowMatrixForm( values )
@@ -204,9 +198,6 @@ plot.fData = function( x, ... )
 #'
 mfData = function( grid, Data_list )
 {
-  all( abs( diff( unique( diff( grid ) ) ) ) < 1e-14 ) ||
-    stop( ' Error in mfData: you provided an unevenly spaced grid')
-
   dimMatrix = sapply( Data_list, dim )
 
   if( any( sapply( dimMatrix, is.null ) ) )
@@ -1219,13 +1210,26 @@ median_mfData = function( mfData, type = 'multiMBD', ... )
                                values = toRowMatrixForm( fD$values[ i, ] ) ),
                          class = c( 'fData' ) ) )
     } else {
-      return( structure( list( t0 = fD$t0 + ( min( j ) - 1 ) * fD$h,
-                               tP = fD$t0 + ( max( j ) - 1 ) * fD$h,
-                               h = fD$h,
-                               P = length( j ),
-                               N = ifelse( missing( i ), fD$N, length( i ) ),
-                               values = toRowMatrixForm( fD$values[ i, j ] ) ),
-                         class = c( 'fData' ) ) )
+      if( is.logical( j ) ){
+
+        return( structure( list( t0 = fD$t0 + ( min( which( j ) ) - 1 ) * fD$h,
+                                 tP = fD$t0 + ( max( which( j ) ) - 1 ) * fD$h,
+                                 h = fD$h,
+                                 P = length( which( j ) ),
+                                 N = ifelse( missing( i ), fD$N, length( i ) ),
+                                 values = toRowMatrixForm( fD$values[ i, j ] ) ),
+                           class = c( 'fData' ) ) )
+
+      } else if( is.numeric( j ) ){
+
+        return( structure( list( t0 = fD$t0 + ( min( j ) - 1 ) * fD$h,
+                                 tP = fD$t0 + ( max( j ) - 1 ) * fD$h,
+                                 h = fD$h,
+                                 P = length( j ),
+                                 N = ifelse( missing( i ), fD$N, length( i ) ),
+                                 values = toRowMatrixForm( fD$values[ i, j ] ) ),
+                           class = c( 'fData' ) ) )
+      }
     }
   } else {
     return( fD$values[ i, j ] )
