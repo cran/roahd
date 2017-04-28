@@ -2,8 +2,10 @@
 % Please edit documentation in R/Indexes.R
 \name{MEI}
 \alias{MEI}
-\alias{MEI.default}
 \alias{MEI.fData}
+\alias{MEI}
+\alias{MEI.default}
+\alias{MEI}
 \title{Modified Epigraph Index of univariate functional dataset}
 \usage{
 MEI(Data)
@@ -23,14 +25,14 @@ element of the functional dataset provided in \code{Data}.
 }
 \description{
 This function computes the Modified Epigraphic Index (MEI) of elements of a
-univariate functional dataste.
+univariate functional dataset.
 }
 \details{
 Given a univariate functional dataset, \eqn{X_1(t), X_2(t), \ldots, X_N(t)},
 defined over a compact interval \eqn{I=[a,b]}, this function computes the
 MEI, i.e.:
 
-\deqn{MEI( X(t) ) = \frac{1}{N} \sum_{i=1}^N \tilde{\lambda}( X(t) \geq
+\deqn{MEI( X(t) ) = \frac{1}{N} \sum_{i=1}^N \tilde{\lambda}( X(t) \leq
 X_i(t) ), }
 
 where \eqn{\tilde{\lambda}(\cdot)} is the normalised Lebesgue measure over
@@ -68,4 +70,3 @@ visualization for functional data: the outliergram, \emph{Biostatistics},
 \code{\link{EI}}, \code{\link{MHI}}, \code{\link{HI}},
 \code{\link{fData}}
 }
-

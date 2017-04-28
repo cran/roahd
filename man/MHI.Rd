@@ -2,8 +2,10 @@
 % Please edit documentation in R/Indexes.R
 \name{MHI}
 \alias{MHI}
-\alias{MHI.default}
 \alias{MHI.fData}
+\alias{MHI}
+\alias{MHI.default}
+\alias{MHI}
 \title{Modified Hypograph Index of univariate functional dataset}
 \usage{
 MHI(Data)
@@ -23,7 +25,7 @@ element of the functional dataset provided in \code{Data}.
 }
 \description{
 This function computes the Modified Hypograph Index (MEI) of elements of a
-univariate functional dataste.
+univariate functional dataset.
 }
 \details{
 Given a univariate functional dataset, \eqn{X_1(t), X_2(t), \ldots, X_N(t)},
@@ -67,4 +69,3 @@ visualization for functional data: the outliergram, \emph{Biostatistics},
 \code{\link{HI}}, \code{\link{MEI}}, \code{\link{EI}},
 \code{\link{fData}}
 }
-
