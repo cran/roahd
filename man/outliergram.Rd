@@ -4,9 +4,9 @@
 \alias{outliergram}
 \title{Outliergram for univariate functional datasets}
 \usage{
-outliergram(fData, MBD_data = NULL, MEI_data = NULL, q_low = 0,
-  q_high = 1, p_check = 0.05, Fvalue = 1.5, adjust = FALSE,
-  display = TRUE, xlab = NULL, ylab = NULL, main = NULL, ...)
+outliergram(fData, MBD_data = NULL, MEI_data = NULL, p_check = 0.05,
+  Fvalue = 1.5, adjust = FALSE, display = TRUE, xlab = NULL,
+  ylab = NULL, main = NULL, ...)
 }
 \arguments{
 \item{fData}{the univariate functional dataset whose outliergram has to be
@@ -17,18 +17,6 @@ If missing, MBDs are computed.}
 
 \item{MEI_data}{a vector containing the MEI for each element of the dataset.
 If not not provided, MEIs are computed.}
-
-\item{q_low}{parameter used in the part where data are shifted toward the
-center of the dataset. It indicates the quantile to be used to compute the
-target to compare functions in the secondary check for outliers. Defult is 0,
-i.e. High MEI functions (lying at the bottom of the dataset) are compared
-to the minimum of all the remaining functions.}
-
-\item{q_high}{parameter used in the part where data are shifted toward the
-center of the dataset. It indicates the quantile to be used to compute the
-target to compare functions in the secondary check for outliers.
-Defult is 1, i.e. Low MEI functions (lying at the top of the dataset) are
-compared to the maximum of all the remaining functions.}
 
 \item{p_check}{percentage of observations with either low or high MEI to be
 checked for outliers in the secondary step (shift towards the center of the
@@ -91,9 +79,12 @@ of the functional dataset}
 }
 \value{
 Even when used graphically to plot the outliergram, the function returns a
-list containing a numeric vector with the IDs of observations in
-\code{fData} that are considered as shape outliers and the value of
-\code{Fvalue} that has been used in determining them.
+list containing:
+\itemize{
+\item{\code{Fvalue}}{: the value of the parameter F used;}
+\item{\code{d}}{: the vector of values of the parameter \eqn{d} for each observation
+(distance to the parabolic border of the outliergram);}
+\item{\code{ID_outliers}}{: the vector of observations id corresponding to outliers.}}
 }
 \description{
 This function performs the outliergram of a univariate functional dataset,
@@ -155,7 +146,7 @@ fD = fData( grid, Data )
 
 outliergram( fD, display = TRUE )
 
-outliergram( fD, Fvalue = 10, display = TRUE )
+outliergram( fD, Fvalue = 2.5, display = TRUE )
 \dontrun{
 outliergram( fD,
              adjust = list( N_trials = 10,

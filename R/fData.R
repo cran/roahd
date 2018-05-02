@@ -80,6 +80,54 @@ fData = function( grid, values )
                      class = c( 'fData' ) ) )
 }
 
+#' Append two compatible univariate functional datasets
+#'
+#' This is a convenience function that simplifies the task of appending univariate
+#' functional observations of two datasets to a unique univariate functional dataset.
+#'
+#' The two original datasets must be compatible, i.e. must be defined on the same grid.
+#' If we denote with \eqn{X_1, \ldots, X_n} the first dataset, defined over the
+#' grid \eqn{I = t_1, \ldots, t_P}, and with \eqn{Y_1, \ldots, Y_m} the second functional dataset,
+#' defined on the same grid, the method returns the union dataset obtained by taking all the
+#' \eqn{n + m} observations together.
+#'
+#' @param fD1 is the first functional dataset, stored into an \code{fData} object.
+#' @param fD2 is the second functional dataset, stored into an \code{fData} object.
+#'
+#' @return The function returns an \code{fData} object containing the union of \code{fD1} and \code{fD2}
+#'
+#' @seealso \code{\link{append_mfData}}, \code{\link{fData}}
+#'
+#' @examples
+#' # Creating two simple univariate datasets
+#'
+#' grid = seq(0, 2 * pi, length.out = 100)
+#'
+#' values1 = matrix( c(sin(grid),
+#'                     sin(2 * grid)), nrow = 2, ncol = length(grid),
+#'                    byrow=TRUE)
+#'
+#' values2 = matrix( c(cos(grid),
+#'                     cos(2 * grid)), nrow = 2, ncol = length(grid),
+#'                    byrow=TRUE)
+#'
+#' fD1 = fData( grid, values1 )
+#' fD2 = fData( grid, values2 )
+#'
+#' # Appending them to a unique dataset
+#' append_fData(fD1, fD2)
+#'
+#' @export
+append_fData = function(fD1, fD2)
+{
+  stopifnot((fD1$P == fD2$P) & (fD1$t0 == fD2$t0) & (fD1$tP == fD2$tP)
+            & (fD1$h == fD2$h))
+
+  grid = seq(fD1$t0, fD1$tP, length.out=fD1$P)
+
+  return(fData(grid, values = rbind(fD1$values, fD2$values)))
+}
+
 #' Specialised method to plot \code{fData} objects
 #'
 #' This function performs the plot of a functional univariate dataset stored in
@@ -237,6 +285,58 @@ mfData = function( grid, Data_list )
                            tP = fDList[[ 1 ]]$tP,
                            fDList = fDList ),
                      class = c( 'mfData' ) ) )
+}
+#' Append two compatible multivariate functional datasets
+#'
+#' This is a convenience function that simplifies the task of appending multivariate
+#' functional observations of two datasets to a unique multivariate functional dataset.
+#'
+#' The two original datasets must be compatible, i.e. must have same number of components
+#' (dimensions) and must be defined on the same grid. If we denote with
+#' \eqn{X_1^(i), \ldots, X_n^(i)}, \eqn{i=0, \ldots, L} the first dataset, defined over the
+#' grid \eqn{I = t_1, \ldots, t_P}, and with \eqn{Y_1^(i), \ldots, Y_m^(i)}, \eqn{i=0, \ldots, L}
+#' the second functional dataset, the method returns the union dataset obtained by taking all the
+#' \eqn{n + m} observations together.
+#'
+#' @param mfD1 is the first multivariate functional dataset, stored into an \code{mfData} object.
+#' @param mfD2 is the second multivariate functional dataset, stored into an \code{mfData} object.
+#'
+#' @return The function returns a \code{mfData} object containing the union of \code{mfD1} and \code{mfD2}
+#'
+#' @seealso \code{\link{append_fData}}, \code{\link{mfData}}
+#'
+#' @examples
+#' # Creating two simple bivariate datasets
+#'
+#' grid = seq(0, 2 * pi, length.out = 100)
+#'
+#' values11 = matrix( c(sin(grid),
+#'                      sin(2 * grid)), nrow = 2, ncol = length(grid),
+#'                    byrow=TRUE)
+#' values12 = matrix( c(sin(3 * grid),
+#'                      sin(4 * grid)), nrow = 2, ncol = length(grid),
+#'                    byrow=TRUE)
+#' values21 = matrix( c(cos(grid),
+#'                      cos(2 * grid)), nrow = 2, ncol = length(grid),
+#'                    byrow=TRUE)
+#' values22 = matrix( c(cos(3 * grid),
+#'                      cos(4 * grid)), nrow = 2, ncol = length(grid),
+#'                    byrow=TRUE)
+#'
+#' mfD1 = mfData( grid, list(values11, values12) )
+#' mfD2 = mfData( grid, list(values21, values22) )
+#'
+#' # Appending them to a unique dataset
+#' append_mfData(mfD1, mfD2)
+#'
+#' @export
+append_mfData = function(mfD1, mfD2)
+{
+  stopifnot((mfD1$P == mfD2$P) & (mfD1$t0 == mfD2$t0) & (mfD1$tP == mfD2$tP)
+            & (mfD1$fDList[[1]]$h == mfD2$fDList[[1]]$h) & (mfD1$L == mfD2$L))
+
+  return(as.mfData(lapply(1:mfD1$L,
+                          function(id) append_fData(mfD1$fDList[[id]], mfD2$fDList[[id]]))))
 }
 
 #' Specialised method to plot \code{mfData} objects
@@ -835,7 +935,6 @@ cov_fun = function( X, Y = NULL )
 }
 
 #' @rdname cov_fun
-#' @aliases cov_fun
 #'
 #' @importFrom stats cov
 #' @export
@@ -871,7 +970,6 @@ cov_fun.fData = function( X, Y = NULL )
 }
 
 #' @rdname cov_fun
-#' @aliases cov_fun
 #'
 #' @export
 cov_fun.mfData = function( X, Y = NULL )
@@ -1142,9 +1240,9 @@ median_mfData = function( mfData, type = 'multiMBD', ... )
 #'
 #' @param fD the univariate functional dataset in form of \code{fData} object.
 #' @param i a valid expression to subset rows ( observations ) of the univariate
-#' functional dataset
+#' functional dataset.
 #' @param j a valid expression to subset columns ( measurements over the grid )
-#' of the univariate functional dataset.
+#' of the univariate functional dataset (must be contiguous).
 #' @param as_fData logical flag to specify whether the output should be returned
 #' as an \code{fData} object containing the required subset or as a matrix of
 #' values, default is \code{TRUE}.
@@ -1211,7 +1309,9 @@ median_mfData = function( mfData, type = 'multiMBD', ... )
                          class = c( 'fData' ) ) )
     } else {
       if( is.logical( j ) ){
-
+        if (sum(abs(diff(j)) > 1)){
+          stop('You must specify a contiguous grid')
+        }
         return( structure( list( t0 = fD$t0 + ( min( which( j ) ) - 1 ) * fD$h,
                                  tP = fD$t0 + ( max( which( j ) ) - 1 ) * fD$h,
                                  h = fD$h,
@@ -1221,7 +1321,9 @@ median_mfData = function( mfData, type = 'multiMBD', ... )
                            class = c( 'fData' ) ) )
 
       } else if( is.numeric( j ) ){
-
+        if (sum(abs(diff(j)) > 1)){
+          stop('You must specify a contiguous grid')
+        }
         return( structure( list( t0 = fD$t0 + ( min( j ) - 1 ) * fD$h,
                                  tP = fD$t0 + ( max( j ) - 1 ) * fD$h,
                                  h = fD$h,
@@ -1236,6 +1338,72 @@ median_mfData = function( mfData, type = 'multiMBD', ... )
   }
 }
 
+#' Operator \code{sub-.mfData} to subset \code{mfData} obejcts
+#'
+#' This method provides an easy and natural way to subset a multivariate
+#' functional dataset stored in a \code{mfData} object, without having to
+#' deal with the inner representation of \code{mfData} class.
+#'
+#' @param mfD the multivariate functional dataset in form of \code{mfData} object.
+#' @param i a valid expression to subset rows ( observations ) of the univariate
+#' functional dataset.
+#' @param j a valid expression to subset columns ( measurements over the grid )
+#' of the univariate functional dataset (must be contiguous).
+#'
+#' @return The method returns and \code{mfData} object containing the
+#' required subset ( both in terms  of observations and measurement points ) of
+#' the multivariate functional dataset.
+#'
+#' @name sub-.mfData
+#'
+#' @seealso \code{\link{mfData}}
+#'
+#' @examples
+#' # Defining parameters
+#' N = 1e2
+#'
+#' P = 1e3
+#'
+#' t0 = 0
+#' t1 = 1
+#'
+#' # Defining the measurement grid
+#' grid = seq( t0, t1, length.out = P )
+#'
+#' # Generating an exponential covariance matrix to be used in the simulation of
+#' # the functional datasets (see the related help for details)
+#' C = exp_cov_function( grid, alpha = 0.3, beta = 0.4 )
+#'
+#' # Simulating the measurements of two univariate functional datasets with
+#' # required center and covariance function
+#' Data_1 = generate_gauss_fdata( N, centerline = sin( 2 * pi * grid ), Cov = C )
+#' Data_2 = generate_gauss_fdata( N, centerline = sin( 2 * pi * grid ), Cov = C )
+#'
+#' # Building the mfData object
+#' mfD = mfData( grid, list( Data_1, Data_2 ) )
+#'
+#' # Subsetting the first 10 elements and 10 time points
+#' mfD[1:10, 1:10]
+#'
+#' # Subsetting only observations
+#' mfD[1:10,]
+#'
+#' # Subsetting only time points (contiguously)
+#' mfD[,1:10]
+#'
+#' @export
+#'
+"[.mfData" = function(mfD, i, j)
+{
+  if(missing(j)){
+    j = 1:mfD$P
+  }
+  if(missing(i))
+  {
+    i=1:mfD$N
+  }
+  return(as.mfData(lapply(mfD$fDList, function(x)x[i, j])))
+}
 
 #' Manipulation of \code{mfData} list of values
 #'
