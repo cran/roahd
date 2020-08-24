@@ -185,9 +185,9 @@ BD.default = function( Data )
 #'
 BD_relative = function( Data_target, Data_reference )
 {
-  if( class( Data_target ) != class( Data_reference ) )
+  if( any(class( Data_target ) != class( Data_reference )) )
   {
-    if( ! ( class( Data_target ) %in% c( 'numeric', 'array', 'matrix' ) &
+    if( ! all( class( Data_target ) %in% c( 'numeric', 'array', 'matrix' ) &
             class( Data_reference ) %in% c( 'numeric', 'array', 'matrix' ) ) )
     {
       stop( 'Error in BD_relative: you have to provide target and reference data
@@ -262,7 +262,7 @@ not compliant dimensions to BD_relative')
 #' \tilde{\lambda}\big( {t : \min( X_{i_1}(t), X_{i_2}(t) ) \leq X(t) \leq
 #' \max( X_{i_1}(t), X_{i_2}(t) ) } \big), }
 #'
-#' where \eqn{\tilde{\lambda}(\cdot)} is the normalised Lebesgue measure over
+#' where \eqn{\tilde{\lambda}(\cdot)} is the normalized Lebesgue measure over
 #' \eqn{I=[a,b]}, that is \eqn{\tilde{\lambda(A)} = \lambda( A ) / ( b - a )}.
 #'
 #' See the References section for more details.
@@ -396,7 +396,7 @@ MBD.default = function( Data, manage_ties = FALSE )
 #' \max( Y_{i_1}(t), Y_{i_2}(t) ) } \big),}
 #'
 #' \eqn{\forall i = 1, \ldots, N}, where \eqn{\tilde{\lambda}(\cdot)} is the
-#' normalised Lebesgue measure over \eqn{I=[a,b]}, that is
+#' normalized Lebesgue measure over \eqn{I=[a,b]}, that is
 #' \eqn{\tilde{\lambda(A)} = \lambda( A ) / ( b - a )}.
 #'
 #' @param Data_target is the univariate functional dataset, provided either as
@@ -480,9 +480,9 @@ MBD.default = function( Data, manage_ties = FALSE )
 #'
 MBD_relative = function( Data_target, Data_reference )
 {
-  if( class( Data_target ) != class( Data_reference ) )
+  if( any(class( Data_target ) != class( Data_reference )) )
   {
-    if( ! ( class( Data_target ) %in% c( 'numeric', 'array', 'matrix' ) &
+    if( ! all( class( Data_target ) %in% c( 'numeric', 'array', 'matrix' ) &
             class( Data_reference ) %in% c( 'numeric', 'array', 'matrix' ) ) )
     {
       stop( 'Error in MBD_relative: you have to provide target and reference data

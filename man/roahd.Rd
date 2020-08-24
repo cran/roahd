@@ -3,10 +3,9 @@
 \docType{package}
 \name{roahd}
 \alias{roahd}
-\alias{roahd-package}
 \title{roahd: RObust Analysis for High dimensional Data.}
 \description{
-A package meant to collect and provide methods for the analysis of unviariate
+A package meant to collect and provide methods for the analysis of univariate
 and multivariate functional datasets through the use of robust methods, with
 special focus on computation of depths and outlier detection.
 Special care was devoted to the efficient implementation of robust methods,
