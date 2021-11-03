@@ -1,16 +1,17 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# roahd
+# roahd <a href='https://astamm.github.io/roahd/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
 [![check-standard](https://github.com/astamm/roahd/workflows/R-CMD-check/badge.svg)](https://github.com/astamm/roahd/actions)
 [![test-coverage](https://github.com/astamm/roahd/workflows/test-coverage/badge.svg)](https://github.com/astamm/roahd/actions)
-[![codecov](https://codecov.io/gh/astamm/roahd/branch/master/graph/badge.svg)](https://codecov.io/gh/astamm/roahd)
+[![codecov](https://codecov.io/gh/astamm/roahd/branch/master/graph/badge.svg)](https://app.codecov.io/gh/astamm/roahd)
 [![pkgdown](https://github.com/astamm/roahd/workflows/pkgdown/badge.svg)](https://github.com/astamm/roahd/actions)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/roahd)](https://CRAN.R-project.org/package=roahd)
+[![downloads](https://cranlogs.r-pkg.org/badges/roahd)](https://cran.r-project.org/package=roahd)
 <!-- badges: end -->
 
 The **roahd** (*Robust Analysis of High-dimensional Data*) package
@@ -23,7 +24,7 @@ efficiency, so that they can be profitably used also for the analysis of
 high-dimensional datasets.
 
 For a full-featured description of the package, please take a look at
-the [roahd](https://astamm.github.io/roahd/articles/roahd-overview.html)
+the [roahd](https://astamm.github.io/roahd/articles/roahd.html)
 vignette.
 
 ## Installation
@@ -96,7 +97,6 @@ plot( mean( fD ), lwd = 4, add = TRUE )
 <img src="man/figures/README-fData-plot-1.png" width="100%" />
 
 ``` r
-
 plot( fD[ 2:3, ] )
 ```
 
@@ -107,11 +107,11 @@ plot( fD[ 2:3, ] )
 A part of the package is specifically devoted to the computation of
 depths and other statistical indices for functional data:
 
-  - Band depths and modified band depths,
-  - Modified band depths for multivariate functional data,
-  - Epigraph and hypograph indexes,
-  - Spearman and Kendall’s correlation indexes for functional data,
-  - Confidence intervals and tests on Spearman’s correlation
+-   Band depths and modified band depths,
+-   Modified band depths for multivariate functional data,
+-   Epigraph and hypograph indexes,
+-   Spearman and Kendall’s correlation indexes for functional data,
+-   Confidence intervals and tests on Spearman’s correlation
     coefficients for univariate and multivariate functional data.
 
 These also are the core of the visualization / robustification tools
@@ -134,24 +134,22 @@ the true positive outliers rate.
 If you use this package for your own research, please cite the
 corresponding R Journal article:
 
-``` 
 
-To cite roahd in publications use:
+    To cite roahd in publications use:
 
-  Ieva, F., Paganoni, A. M., Romo, J., & Tarabelloni, N. (2019). roahd
-  Package: Robust Analysis of High Dimensional Data. The R Journal,
-  11(2), pp. 291-307.
+      Ieva, F., Paganoni, A. M., Romo, J., & Tarabelloni, N. (2019). roahd
+      Package: Robust Analysis of High Dimensional Data. The R Journal,
+      11(2), pp. 291-307.
 
-A BibTeX entry for LaTeX users is
+    A BibTeX entry for LaTeX users is
 
-  @Article{,
-    title = {{roahd Package: Robust Analysis of High Dimensional Data}},
-    author = {Francesca Ieva and Anna Maria Paganoni and Juan Romo and Nicholas Tarabelloni},
-    journal = {{The R Journal}},
-    year = {2019},
-    volume = {11},
-    number = {2},
-    pages = {291--307},
-    url = {https://doi.org/10.32614/RJ-2019-032},
-  }
-```
+      @Article{,
+        title = {{roahd Package: Robust Analysis of High Dimensional Data}},
+        author = {Francesca Ieva and Anna Maria Paganoni and Juan Romo and Nicholas Tarabelloni},
+        journal = {{The R Journal}},
+        year = {2019},
+        volume = {11},
+        number = {2},
+        pages = {291--307},
+        url = {https://doi.org/10.32614/RJ-2019-032},
+      }
